@@ -1,5 +1,5 @@
 const path = require('path');
-
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 const merge = require('webpack-merge');
@@ -49,7 +49,16 @@ const common = {
 		  }
 	  ] 
 	   
-   }	
+   },
+	 plugins: [
+    new HtmlWebpackPlugin({
+      template: 'node_modules/html-webpack-template/index.ejs',
+      title: 'Kanban app',
+      appMountId: 'app',
+      inject: false
+    })
+  ]
+	
 };
 
 //Default config. Will return that if webpack is called outside of npm
@@ -58,7 +67,7 @@ if(TARGET === 'start' || !TARGET) {
 	module.exports = merge(common, {
 devtool: 'eval-source-map',		
 devServer: {
-contentBase: PATHS.build,
+
 //enable history API fallback so HTML History API based
 // routing works. This is a good default that will come in handy.
 historyApiFallback: true,
